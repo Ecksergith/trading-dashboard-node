@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node server/index.js",
+    "desktop": "node desktop.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "node node_modules/vite/bin/vite.js",
     "server": "node server/index.js",
