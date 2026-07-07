@@ -7,45 +7,32 @@ echo ========================================
 cd /d "%~dp0"
 
 REM Verificar se o Inno Setup está instalado
-where iscc >nul 2>&1
-if %ERRORLEVEL%==0 goto build
-
-REM Tentar caminhos comuns do Inno Setup
 set "ISCC_PATH=C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
-if exist "%ISCC_PATH%" goto build_with_path
+if exist "%ISCC_PATH%" goto build
 
 set "ISCC_PATH=C:\Program Files\Inno Setup 6\ISCC.exe"
-if exist "%ISCC_PATH%" goto build_with_path
+if exist "%ISCC_PATH%" goto build
 
 set "ISCC_PATH=C:\Program Files (x86)\Inno Setup 5\ISCC.exe"
-if exist "%ISCC_PATH%" goto build_with_path
+if exist "%ISCC_PATH%" goto build
 
-echo [ERRO] Inno Setup não encontrado!
+echo [ERRO] Inno Setup nao encontrado!
 echo.
-echo Por favor, instale o Inno Setup 6:
-echo https://jrsoftware.org/isinfo.php
-echo.
-echo Ou especifique o caminho do ISCC.exe
+echo Instale o Inno Setup 6: https://jrsoftware.org/isinfo.php
 pause
 exit /b 1
 
-:build_with_path
-"%ISCC_PATH%" "setup.iss"
-goto check_result
-
 :build
-iscc "setup.iss"
+echo Compilando instalador...
+"%ISCC_PATH%" setup.iss
 
-:check_result
 if %ERRORLEVEL%==0 (
     echo.
     echo ========================================
-    echo   Instalador construído com sucesso!
+    echo   Instalador construido com sucesso!
     echo ========================================
     echo.
-    echo Arquivo: installer\output\UkuloTrade_Setup_1.0.0.exe
-    echo.
-    dir "output\*.exe" /b 2>nul
+    echo Arquivo: output\UkuloTrade_Setup_1.0.0.exe
 ) else (
     echo.
     echo [ERRO] Falha ao construir instalador
