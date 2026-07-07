@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ukulo Trade - Trading Dashboard Profissional</title>
+    <meta name="description" content="Ukulo Trade - Plataforma profissional de trading com IA, análise técnica e gestão automatizada de operações. Ukulo Digital LDA, Angola.">
+    <meta name="keywords" content="trading, forex, MT5, MetaTrader, trading dashboard, análise técnica, trading automatizado, Angola">
+    <meta property="og:title" content="Ukulo Trade - Trading Dashboard Profissional">
+    <meta property="og:description" content="Plataforma profissional de trading com IA, análise técnica e gestão automatizada de operações.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #00d4aa;
+            --primary-dark: #00b894;
+            --secondary: #6c5ce7;
+            --dark: #0a0a0f;
+            --dark-light: #12121a;
+            --gray: #8a8a9a;
+            --light: #e0e0e8;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #00d4aa 0%, #6c5ce7 100%);
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.06);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.7rem 2rem;
+            background: rgba(10, 10, 15, 0.95);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .nav-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+
+        .nav-logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .nav-logo-text span { color: var(--primary); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        .nav-cta {
+            background: var(--gradient);
+            color: var(--dark) !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600 !important;
+            transition: transform 0.3s, box-shadow 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 170, 0.3);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 212, 170, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 50%, rgba(108, 92, 231, 0.08) 0%, transparent 50%);
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 30%, transparent 70%);
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.15rem;
+            color: var(--gray);
+            max-width: 500px;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 212, 170, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--white);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .hero-stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .hero-stat-value span { color: var(--primary); }
+
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+        }
+
+        .hero-dashboard {
+            background: var(--dark-light);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dashboard-header h3 {
+            font-size: 0.9rem;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .dashboard-header .status {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--primary);
+        }
+
+        .dashboard-header .status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .dashboard-chart {
+            height: 200px;
+            background: linear-gradient(180deg, rgba(0, 212, 170, 0.1) 0%, transparent 100%);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 20%;
+            left: 5%;
+            right: 5%;
+            height: 2px;
+            background: var(--gradient);
+            transform: rotate(-3deg);
+            box-shadow: 0 0 20px rgba(0, 212, 170, 0.5);
+        }
+
+        .chart-line::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(180deg, rgba(0, 212, 170, 0.15) 0%, transparent 100%);
+        }
+
+        .chart-candle {
+            position: absolute;
+            width: 8px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem;
+        }
+
+        .stat-card-label {
+            font-size: 0.65rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-card-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-top: 0.2rem;
+        }
+
+        .stat-card-value.positive { color: var(--primary); }
+        .stat-card-value.negative { color: #ff6b6b; }
+
+        .floating-card {
+            position: absolute;
+            background: var(--dark-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-card-1 {
+            top: -20px;
+            right: -30px;
+            animation-delay: 0s;
+        }
+
+        .floating-card-2 {
+            bottom: 30px;
+            left: -40px;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating-card .fc-label {
+            font-size: 0.65rem;
+            color: var(--gray);
+            text-transform: uppercase;
+        }
+
+        .floating-card .fc-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .floating-card .fc-change {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* ========== SECTIONS COMMON ========== */
+        section { padding: 6rem 2rem; }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========== FEATURES ========== */
+        .features { background: var(--dark-light); }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 170, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 212, 170, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* ========== HOW IT WORKS ========== */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0.3;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--glass);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .step h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* ========== PRICING ========== */
+        .pricing { background: var(--dark-light); }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .pricing-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            background: rgba(0, 212, 170, 0.05);
+            border-color: rgba(0, 212, 170, 0.3);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MAIS POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient);
+            color: var(--dark);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .pricing-plan {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray);
+        }
+
+        .pricing-desc {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            font-size: 0.9rem;
+            color: var(--light);
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 212, 170, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .pricing-card .btn { width: 100%; justify-content: center; }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .testimonial-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .testimonial-stars {
+            color: #ffd700;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+        }
+
+        .testimonial-text {
+            font-size: 0.95rem;
+            color: var(--light);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+
+        .testimonial-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .testimonial-role {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        /* ========== FAQ ========== */
+        .faq { background: var(--dark-light); }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover { border-color: rgba(0, 212, 170, 0.2); }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .faq-question h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .faq-question .faq-toggle {
+            width: 28px;
+            height: 28px;
+            background: var(--glass);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .faq-item.active .faq-toggle { transform: rotate(45deg); }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer { max-height: 200px; }
+
+        .faq-answer p {
+            padding: 0 1.5rem 1.25rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* ========== CTA ========== */
+        .cta-section {
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .cta-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.08) 0%, rgba(108, 92, 231, 0.08) 100%);
+            border: 1px solid rgba(0, 212, 170, 0.2);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 212, 170, 0.05) 0%, transparent 50%);
+        }
+
+        .cta-box h2 {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .cta-box p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .cta-box .btn { position: relative; }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: var(--dark);
+            border-top: 1px solid var(--border);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-top: 1rem;
+            line-height: 1.7;
+        }
+
+        .footer-col h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1.2rem;
+        }
+
+        .footer-col ul { list-style: none; }
+
+        .footer-col li { margin-bottom: 0.6rem; }
+
+        .footer-col a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover { color: var(--primary); }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-legal a {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-legal a:hover { color: var(--primary); }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-description { margin: 0 auto 2rem; }
+            .hero-actions { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .hero-visual { display: none; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-card.featured { transform: scale(1); }
+            .pricing-card.featured:hover { transform: translateY(-5px); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--dark);
+                padding: 1rem 2rem 2rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .features-grid,
+            .steps-grid,
+            .pricing-grid,
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .steps-grid::before { display: none; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .cta-box { padding: 3rem 1.5rem; }
+        }
+
+        /* ========== ANIMATIONS ========== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="#" class="nav-logo">
+            <div class="nav-logo-icon">UT</div>
+            <div class="nav-logo-text">Ukulo <span>Trade</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#features">Funcionalidades</a></li>
+            <li><a href="#how-it-works">Como Funciona</a></li>
+            <li><a href="#pricing">Preços</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact" class="nav-cta">Começar Agora</a></li>
+        </ul>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-badge">Plataforma de Trading com IA</div>
+            <h1>
+                Domine os Mercados com<br>
+                <span class="gradient-text">Inteligência Artificial</span>
+            </h1>
+            <p class="hero-description">
+                Ukulo Trade é a plataforma profissional de trading que combina análise técnica avançada, inteligência artificial e gestão automatizada para maximizar os seus resultados.
+            </p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn btn-primary">
+                    Começar Gratuitamente
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#how-it-works" class="btn btn-secondary">Ver Demo</a>
+            </div>
+            <div class="hero-stats">
+                <div>
+                    <div class="hero-stat-value">99<span>%</span></div>
+                    <div class="hero-stat-label">Uptime</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value">500<span>+</span></div>
+                    <div class="hero-stat-label">Utilizadores</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value">24<span>/7</span></div>
+                    <div class="hero-stat-label">Suporte</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-dashboard">
+                <div class="dashboard-header">
+                    <h3>Trading Dashboard</h3>
+                    <div class="status">MT5 Conectado</div>
+                </div>
+                <div class="dashboard-chart">
+                    <div class="chart-line"></div>
+                </div>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-card-label">Saldo</div>
+                        <div class="stat-card-value">$12,450</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Lucro Hoje</div>
+                        <div class="stat-card-value positive">+$342</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Win Rate</div>
+                        <div class="stat-card-value">78%</div>
+                    </div>
+                </div>
+            </div>
+            <div class="floating-card floating-card-1">
+                <div class="fc-label">Sinal IA</div>
+                <div class="fc-value">BUY EURUSD</div>
+                <div class="fc-change">Confiança: 92%</div>
+            </div>
+            <div class="floating-card floating-card-2">
+                <div class="fc-label">P/L Diário</div>
+                <div class="fc-value">+$1,247</div>
+                <div class="fc-change">↑ 12.5%</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== FEATURES ========== -->
+<section class="features" id="features">
+    <div class="section-container">
+        <div class="section-header">
+            <div class="section-tag">Funcionalidades</div>
+            <h2 class="section-title">Tudo o que precisa num só lugar</h2>
+            <p class="section-subtitle">Ferramentas profissionais de trading, análise técnica e inteligência artificial para traders exigentes.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card fade-up">
+                <div class="feature-icon">🤖</div>
+                <h3>Análise com IA</h3>
+                <p>Motor de inteligência artificial que analisa mercados em tempo real e gera sinais de trading com alta taxa de acerto.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">📊</div>
+                <h3>Dashboard Profissional</h3>
+                <p>Interface completa com gráficos interativos, indicadores técnicos e visualização de dados em tempo real.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">⚡</div>
+                <h3>Trading Automatizado</h3>
+                <p>Execute operações automaticamente com base em estratégias configuráveis e gestão de risco integrada.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">🔗</div>
+                <h3>Integração MT5</h3>
+                <p>Conexão direta com MetaTrader 5 para execução instantânea de ordens e monitorização de posições.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">📈</div>
+                <h3>Indicadores Técnicos</h3>
+                <p>CCI, RSI, MACD, Bollinger Bands e muito mais. Análise técnica completa com sinais automatizados.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">🛡️</div>
+                <h3>Gestão de Risco</h3>
+                <p>Stop Loss, Take Profit, trailing stop e proteção de capital com configurações personalizáveis.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">📱</div>
+                <h3>Acesso Multi-Dispositivo</h3>
+                <p>Acesse o seu dashboard de qualquer dispositivo. Desktop, tablet ou smartphone, sempre disponível.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">🔐</div>
+                <h3>Segurança Total</h3>
+                <p>Dados encriptados e armazenamento seguro. A sua privacidade e segurança são a nossa prioridade.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">💬</div>
+                <h3>Suporte 24/7</h3>
+                <p>Equipa de suporte técnico disponível 24 horas por dia, 7 dias por semana para ajudá-lo.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="how-it-works" id="how-it-works">
+    <div class="section-container">
+        <div class="section-header">
+            <div class="section-tag">Como Funciona</div>
+            <h2 class="section-title">Comece a trading em 3 passos</h2>
+            <p class="section-subtitle">Um processo simples e rápido para começar a utilizar o Ukulo Trade.</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step fade-up">
+                <div class="step-number">1</div>
+                <h3>Instale o Software</h3>
+                <p>Baixe e instale o Ukulo Trade no seu computador. Configuração simples em poucos minutos.</p>
+            </div>
+            <div class="step fade-up">
+                <div class="step-number">2</div>
+                <h3>Conecte o MT5</h3>
+                <p>Ligue o seu MetaTrader 5 ao Ukulo Trade através do MT5 Bridge para sincronizar dados.</p>
+            </div>
+            <div class="step fade-up">
+                <div class="step-number">3</div>
+                <h3>Comece a Operar</h3>
+                <p>Configure as suas estratégias, defina gestão de risco e comece a operar com IA.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== PRICING ========== -->
+<section class="pricing" id="pricing">
+    <div class="section-container">
+        <div class="section-header">
+            <div class="section-tag">Preços</div>
+            <h2 class="section-title">Planos para cada perfil</h2>
+            <p class="section-subtitle">Escolha o plano ideal para o seu nível de experiência e necessidades.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card fade-up">
+                <div class="pricing-plan">Starter</div>
+                <div class="pricing-price">$49<span>/mês</span></div>
+                <p class="pricing-desc">Ideal para traders iniciantes</p>
+                <ul class="pricing-features">
+                    <li>Dashboard básico</li>
+                    <li>1 conta MT5</li>
+                    <li>Indicadores técnicos</li>
+                    <li>Gestão de risco</li>
+                    <li>Suporte por email</li>
+                </ul>
+                <a href="#contact" class="btn btn-secondary">Escolher Plano</a>
+            </div>
+            <div class="pricing-card featured fade-up">
+                <div class="pricing-plan">Professional</div>
+                <div class="pricing-price">$99<span>/mês</span></div>
+                <p class="pricing-desc">Para traders profissionais</p>
+                <ul class="pricing-features">
+                    <li>Dashboard completo</li>
+                    <li>Até 5 contas MT5</li>
+                    <li>IA de análise avançada</li>
+                    <li>Trading automatizado</li>
+                    <li>Gestão de risco avançada</li>
+                    <li>Suporte prioritário</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary">Escolher Plano</a>
+            </div>
+            <div class="pricing-card fade-up">
+                <div class="pricing-plan">Enterprise</div>
+                <div class="pricing-price">$249<span>/mês</span></div>
+                <p class="pricing-desc">Para empresas e fundos</p>
+                <ul class="pricing-features">
+                    <li>Dashboard personalizado</li>
+                    <li>Contas MT5 ilimitadas</li>
+                    <li>IA personalizada</li>
+                    <li>API de integração</li>
+                    <li>Gestão multi-conta</li>
+                    <li>Suporte dedicado</li>
+                </ul>
+                <a href="#contact" class="btn btn-secondary">Contactar Vendas</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== TESTIMONIALS ========== -->
+<section class="testimonials">
+    <div class="section-container">
+        <div class="section-header">
+            <div class="section-tag">Testemunhos</div>
+            <h2 class="section-title">O que dizem os nossos clientes</h2>
+            <p class="section-subtitle">Mais de 500 traders confiam no Ukulo Trade para as suas operações diárias.</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card fade-up">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"O Ukulo Trade revolucionou a minha forma de operar. A análise de IA é incrivelmente precisa e o dashboard é muito intuitivo."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">MC</div>
+                    <div>
+                        <div class="testimonial-name">Manuel Costa</div>
+                        <div class="testimonial-role">Trader Profissional, Luanda</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card fade-up">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Finalmente uma plataforma que reúne tudo o que preciso. A integração com MT5 é perfeita e o suporte é excelente."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">AF</div>
+                    <div>
+                        <div class="testimonial-name">Ana Ferreira</div>
+                        <div class="testimonial-role">Investidora, Benguela</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card fade-up">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"A gestão de risco automatizada deu-me muito mais confiança nas minhas operações. Recomendo a todos os traders."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">PS</div>
+                    <div>
+                        <div class="testimonial-name">Pedro Santos</div>
+                        <div class="testimonial-role">Day Trader, Cabinda</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="faq" id="faq">
+    <div class="section-container">
+        <div class="section-header">
+            <div class="section-tag">FAQ</div>
+            <h2 class="section-title">Perguntas Frequentes</h2>
+            <p class="section-subtitle">Respostas às dúvidas mais comuns sobre o Ukulo Trade.</p>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <h4>O Ukulo Trade é compatível com o meu broker?</h4>
+                    <span class="faq-toggle">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Sim! O Ukulo Trade é compatível com qualquer broker que suporte MetaTrader 5 (MT5). Basta configurar o MT5 Bridge para establecer a conexão.</p>
+                </div>
+            </div>
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <h4>Preciso de conhecimentos avançados de trading?</h4>
+                    <span class="faq-toggle">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Não necessariamente. O Ukulo Trade é projetado para ser intuitivo, com ferramentas de IA que ajudam tanto iniciantes como traders experientes.</p>
+                </div>
+            </div>
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <h4>Os meus dados estão seguros?</h4>
+                    <span class="faq-toggle">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Sim. Utilizamos encriptação de ponta a ponta e os seus dados de trading são armazenados localmente no seu dispositivo. Não partilhamos dados com terceiros.</p>
+                </div>
+            </div>
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <h4>Posso experimentar antes de comprar?</h4>
+                    <span class="faq-toggle">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Sim! Oferecemos um período de teste gratuito de 7 dias para que possa experimentar todas as funcionalidades antes de se comprometer.</p>
+                </div>
+            </div>
+            <div class="faq-item fade-up">
+                <button class="faq-question">
+                    <h4>Como funciona o suporte técnico?</h4>
+                    <span class="faq-toggle">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Oferecemos suporte via email 24/7, chat ao vivo para planos Professional e Enterprise, e suporte telefónico dedicado para clientes Enterprise.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta-section" id="contact">
+    <div class="cta-box">
+        <h2>Pronto para revolucionar o seu trading?</h2>
+        <p>Junte-se a mais de 500 traders que já utilizam o Ukulo Trade para maximizar os seus resultados.</p>
+        <a href="mailto:suporte@ukulodigital.co.ao" class="btn btn-primary">
+            Começar Agora
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="nav-logo">
+                    <div class="nav-logo-icon">UT</div>
+                    <div class="nav-logo-text">Ukulo <span>Trade</span></div>
+                </a>
+                <p>Plataforma profissional de trading com inteligência artificial, análise técnica avançada e gestão automatizada de operações.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Produto</h4>
+                <ul>
+                    <li><a href="#features">Funcionalidades</a></li>
+                    <li><a href="#pricing">Preços</a></li>
+                    <li><a href="#how-it-works">Como Funciona</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Suporte</h4>
+                <ul>
+                    <li><a href="mailto:suporte@ukulodigital.co.ao">Email</a></li>
+                    <li><a href="#">Documentação</a></li>
+                    <li><a href="#">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Empresa</h4>
+                <ul>
+                    <li><a href="#">Sobre Nós</a></li>
+                    <li><a href="#">Contacto</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Ukulo Digital Comércio e Prestação de Serviços, LDA. NIF: 5002885131. Todos os direitos reservados.</p>
+            <div class="footer-legal">
+                <a href="#">Termos de Uso</a>
+                <a href="#">Privacidade</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    mobileToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.faq-item');
+            const isActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!isActive) item.classList.add('active');
+        });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

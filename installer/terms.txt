@@ -1,0 +1,87 @@
+TERMO DE CONDIÇÕES DE USO
+Ukulo Trade - Trading Dashboard
+
+Ukulo Digital Comércio e Prestação de Serviços, LDA
+NIF: 5002885131
+
+========================================
+TERMOS E CONDIÇÕES DE USO
+========================================
+
+1. ACEITAÇÃO DOS TERMOS
+Ao utilizar o Ukulo Trade - Trading Dashboard ("Software"), o utilizador confirma que leu, compreendeu e aceita os presentes Termos e Condições de Uso. Se não concordar com algum dos termos aqui estabelecidos, não deve utilizar o Software.
+
+2. DESCRIÇÃO DO SOFTWARE
+O Ukulo Trade - Trading Dashboard é uma plataforma de gestão e análise de operações de trading, destinada a auxiliar profissionais e empresas na tomada de decisões de investimento. O Software inclui funcionalidades de:
+- Análise técnica de mercados financeiros
+- Gestão automatizada de operações de trading
+- Integração com plataformas de trading (MT5)
+- Análise de dados e geração de sinais
+- Gestão de risco e configurações de proteção
+
+3. LICENÇA DE USO
+A Ukulo Digital concede ao utilizador uma licença não exclusiva, intransferível e revogável para utilizar o Software, sujeita às condições aqui estabelecidas.
+
+4. RESPONSABILIDADES DO UTILIZADOR
+O utilizador compromete-se a:
+a) Utilizar o Software apenas para fins lícitos e em conformidade com a legislação aplicável
+b) Manter a confidencialidade das suas credenciais de acesso
+c) Não partilhar, copiar ou redistribuir o Software sem autorização prévia
+d) Não tentar modificar, descompilar ou fazer engenharia reversa do Software
+e) Comunicar imediatamente qualquer uso não autorizado da sua conta
+
+5. LIMITAÇÃO DE RESPONSABILIDADE
+a) O Software é fornecido "como está" sem garantias de qualquer tipo, expressas ou implícitas
+b) A Ukulo Digital não se responsabiliza por perdas financeiras decorrentes da utilização do Software
+c) O utilizador é o único responsável pelas suas decisões de investimento e trading
+d) A Ukulo Digital não garante a precisão dos dados, sinais ou análises fornecidos pelo Software
+e) O utilizador deve realizar a sua própria análise e avaliação de risco antes de tomar decisões de investimento
+
+6. RISCO DE INVESTIMENTO
+a) Operações de trading envolvem riscos significativos e podem resultar em perdas substanciais
+b) O utilizador declara estar ciente dos riscos associados ao trading de instrumentos financeiros
+c) A Ukulo Digital não garante lucros ou resultados específicos da utilização do Software
+d) O utilizador deve investir apenas montantes que pode permitir-se perder
+
+7. PROPRIEDADE INTELECTUAL
+a) Todos os direitos de propriedade intelectual do Software são da Ukulo Digital
+b) O utilizador não adquire quaisquer direitos de propriedade intelectual sobre o Software
+c) É proibida a reprodução, distribuição ou criação de trabalhos derivados do Software
+
+8. DADOS E PRIVACIDADE
+a) A Ukulo Digital trata os dados do utilizador em conformidade com a legislação de proteção de dados aplicável
+b) Os dados de trading e configurações são armazenados localmente no dispositivo do utilizador
+c) A Ukulo Digital não partilha dados pessoais do utilizador com terceiros sem consentimento
+
+9. ATUALIZAÇÕES E SUPORTE
+a) A Ukulo Digital pode fornecer atualizações periódicas do Software
+b) O suporte técnico é fornicido através dos canais oficiais da Ukulo Digital
+c) A Ukulo Digital reserva-se o direito de modificar ou descontinuar funcionalidades do Software
+
+10. SUSPENSÃO E RESCISÃO
+a) A Ukulo Digital pode suspender ou rescindir o acesso ao Software em caso de violação dos presentes termos
+b) O utilizador pode rescindir a utilização do Software a qualquer momento
+c) Após a rescisão, o utilizador deve cessar todos os usos do Software
+
+11. LEGISLAÇÃO APLICÁVEL
+a) Os presentes termos são regidos pelas leis da República de Angola
+b) Quaisquer disputas serão resolvidas nos tribunais competentes de Luanda, Angola
+
+12. CONTACTOS
+Ukulo Digital Comércio e Prestação de Serviços, LDA
+NIF: 5002885131
+Email: suporte@ukulodigital.co.ao
+
+========================================
+AVISO DE RISCO
+========================================
+
+IMPORTANTE: Operações de trading de instrumentos financeiros envolvem um elevado nível de risco e não são adequadas para todos os investidores. Antes de decidir operar, deve considerar cuidadosamente os seus objetivos de investimento, nível de experiência e tolerância ao risco. Existe a possibilidade de perder parcial ou totalmente o capital investido. Deve estar ciente de todos os riscos associados ao trading e procurar aconselhamento de um consultor financeiro independente, se necessário.
+
+O Ukulo Trade - Trading Dashboard é uma ferramenta de apoio à decisão e não constitui, em caso algum, aconselhamento financeiro ou recomendação de investimento.
+
+========================================
+Termos e Condições - Versão 1.0
+Ukulo Digital Comércio e Prestação de Serviços, LDA
+Todos os direitos reservados.
+========================================
